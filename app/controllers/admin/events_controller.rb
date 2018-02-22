@@ -1,7 +1,7 @@
 class Admin::EventsController < ApplicationController
   layout 'admin'
   
-  before_action :set_event, only: [:show, :edit, :update]
+  before_action :set_event, only: [:show, :edit, :update, :destroy]
   before_action :event_params, only: [:update, :create]
   
   def index
@@ -30,7 +30,12 @@ class Admin::EventsController < ApplicationController
   def update
     # event_params = params.require(:event).permit(:title, :location, :start_at, :ticket_price, :ticket_quantity, :event_category_id)
     @event.update(event_params)
-    redirect_to admin_event_path(@event), notice: 'Event was successfullt updated.'
+    redirect_to admin_event_path(@event), notice: 'Event was successfully updated.'
+  end
+  
+  def destroy
+    @event.destroy
+    redirect_to admin_events_url, notice: 'Event was successfully destroyed.'
   end
   
   private
