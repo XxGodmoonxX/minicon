@@ -23,8 +23,12 @@ class Admin::EventsController < ApplicationController
   def create
     # event_params = params.require(:event).permit(:title, :location, :start_at, :ticket_price, :ticket_quantity, :event_category_id)
     @event = Event.new(event_params)
-    @event.save
-    redirect_to admin_event_path(@event), notice: 'Event was successfully created.'
+    if @event.save
+      redirect_to admin_event_path(@event), notice: 'Event was successfully created.'
+    else
+      flash.now[:alert] = "Event Cound not be created"
+      render :new
+    end
   end
   
   def update
